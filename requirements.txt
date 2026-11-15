@@ -1,0 +1,7 @@
+flask
+requests
+langchain
+langchain-groq
+langchain-core
+langchain-community
+gunicorn
