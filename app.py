@@ -8,21 +8,20 @@ from langchain_community.chat_message_histories import ChatMessageHistory
 
 app = Flask(__name__)
 
-# --- ඔබගේ අදාළ අංක සහ යතුරු මෙහි දෙන්න ---
-# Vercel Environment Variables වලින් Keys ලබාගැනීම
+# --- Vercel Environment Variables වලින් Keys ලබාගැනීම ---
 GROQ_API_KEY = os.getenv("GROQ_API_KEY")
 WHATSAPP_TOKEN = os.getenv("WHATSAPP_TOKEN")
 PHONE_NUMBER_ID = os.getenv("PHONE_NUMBER_ID")
 VERIFY_TOKEN = os.getenv("VERIFY_TOKEN")
 
-# Groq LLM Setup (ලෝකයේ වේගවත්ම Llama මොඩලය භාවිත කරයි)
+# --- Groq LLM Setup ---
 llm = ChatGroq(
     temperature=0.5,
     model_name="openai/gpt-oss-20b",
     groq_api_key=GROQ_API_KEY
 )
 
-# Vilora Fashion සඳහා System Prompt එක
+# --- System Prompt එක ---
 prompt = ChatPromptTemplate.from_messages([
     ("system", "You are a friendly customer service assistant for a Dress Shop named 'Vilora Fashion'. "
                "You help customers find dresses, check available sizes (S, M, L, XL), provide pricing, "
@@ -35,7 +34,7 @@ prompt = ChatPromptTemplate.from_messages([
 chain = prompt | llm
 store = {}
 
-# පාරිභෝගිකයාගේ Chat History එක තබා ගැනීම
+# --- පාරිභෝගිකයාගේ Chat History එක තබා ගැනීම ---
 def get_session_history(session_id: str):
     if session_id not in store:
         store[session_id] = ChatMessageHistory()
@@ -48,7 +47,7 @@ agent_with_history = RunnableWithMessageHistory(
     history_messages_key="history"
 )
 
-# WhatsApp වෙත Message යැවීමේ Function එක
+# --- WhatsApp වෙත Message යැවීමේ Function එක ---
 def send_whatsapp_message(phone_number, text):
     url = f"https://graph.facebook.com/v17.0/{PHONE_NUMBER_ID}/messages"
     headers = {
@@ -61,13 +60,15 @@ def send_whatsapp_message(phone_number, text):
         "type": "text",
         "text": {"body": text}
     }
-   response = requests.post(url, headers=headers, json=data)
+    
+    # Meta API එකෙන් එන ප්‍රතිචාරය Logs වල පෙන්වීමට
+    response = requests.post(url, headers=headers, json=data)
     print("Meta API Response:", response.text)
 
-# Webhook Endpoint එක (Meta API එකෙන් මැසේජ් එන තැන)
+# --- Webhook Endpoint එක ---
 @app.route('/webhook', methods=['GET', 'POST'])
 def webhook():
-    # 1. Meta Webhook Verification (GET request)
+    # 1. Meta Webhook Verification
     if request.method == 'GET':
         mode = request.args.get('hub.mode')
         token = request.args.get('hub.verify_token')
@@ -78,7 +79,7 @@ def webhook():
                 return challenge, 200
         return "Forbidden", 403
 
-    # 2. පාරිභෝගිකයන්ගෙන් එන WhatsApp Messages ලබා ගැනීම (POST request)
+    # 2. WhatsApp Messages ලබා ගැනීම
     if request.method == 'POST':
         data = request.get_json()
         if data.get('object'):
