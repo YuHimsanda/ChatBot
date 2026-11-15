@@ -17,7 +17,7 @@ VERIFY_TOKEN = "my_custom_verify_token_123"     # ඔබ කැමති ඕන�
 # Groq LLM Setup (ලෝකයේ වේගවත්ම Llama මොඩලය භාවිත කරයි)
 llm = ChatGroq(
     temperature=0.5,
-    model_name="llama-3.1-8b-instant",
+    model_name="llama3-8b-8192",
     groq_api_key=GROQ_API_KEY
 )
 
