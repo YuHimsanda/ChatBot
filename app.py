@@ -61,7 +61,8 @@ def send_whatsapp_message(phone_number, text):
         "type": "text",
         "text": {"body": text}
     }
-    requests.post(url, headers=headers, json=data)
+   response = requests.post(url, headers=headers, json=data)
+    print("Meta API Response:", response.text)
 
 # Webhook Endpoint එක (Meta API එකෙන් මැසේජ් එන තැන)
 @app.route('/webhook', methods=['GET', 'POST'])
