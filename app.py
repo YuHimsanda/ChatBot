@@ -18,7 +18,7 @@ VERIFY_TOKEN = os.getenv("VERIFY_TOKEN")
 # Groq LLM Setup (ලෝකයේ වේගවත්ම Llama මොඩලය භාවිත කරයි)
 llm = ChatGroq(
     temperature=0.5,
-    model_name="llama-3.1-8b-instant",
+    model_name="openai/gpt-oss-20b",
     groq_api_key=GROQ_API_KEY
 )
 
