@@ -9,10 +9,10 @@ from langchain_community.chat_message_histories import ChatMessageHistory
 app = Flask(__name__)
 
 # --- ඔබගේ අදාළ අංක සහ යතුරු මෙහි දෙන්න ---
-GROQ_API_KEY = "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"
-WHATSAPP_TOKEN = "EAAk3lGSw8CMBSypHZAnZCkAEF0HAhgZCZC6xBejDBvh9ZAczJGedPZAp2kB1sHUUBOurem9ZCz7pTfZBdJxaSGCW2oAK3ZAgw8Ubi9dCwMJ3OuKUEcYJB00aCEuMR91EoVejkgVUNH5MSgDN5N84kuTXnxxOyqhmweooPOfG4s1xeIuMezKZC7903tCKZCPUoRZA1LRvll5cIXEgZA0o7YOkkwc3PFzIrcYHVCE1QbdEaEgCMIEWZCLBGo5zGGZCgvWjstvGtmiFkQmqSq4cAbyqT7Wg4qOxSjc"
-VERIFY_TOKEN = "my_custom_verify_token_123" # Meta portal එකේ Webhook setup කරද්දී මේක දෙන්න
-PHONE_NUMBER_ID = "1499741559878841"
+GROQ_API_KEY = "your_groq_api_key_here"       # Groq Console එකෙන් ගත්තු Key එක
+WHATSAPP_TOKEN = "your_meta_whatsapp_token_here" # Meta Developer Portal එකේ Token එක
+PHONE_NUMBER_ID = "your_phone_number_id_here"   # Meta Phone Number ID එක
+VERIFY_TOKEN = "my_custom_verify_token_123"     # ඔබ කැමති ඕනෑම Verification Token එකක්
 
 # Groq LLM Setup (ලෝකයේ වේගවත්ම Llama මොඩලය භාවිත කරයි)
 llm = ChatGroq(
