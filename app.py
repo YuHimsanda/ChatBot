@@ -9,10 +9,11 @@ from langchain_community.chat_message_histories import ChatMessageHistory
 app = Flask(__name__)
 
 # --- ඔබගේ අදාළ අංක සහ යතුරු මෙහි දෙන්න ---
-GROQ_API_KEY = "your_groq_api_key_here"       # Groq Console එකෙන් ගත්තු Key එක
-WHATSAPP_TOKEN = "your_meta_whatsapp_token_here" # Meta Developer Portal එකේ Token එක
-PHONE_NUMBER_ID = "your_phone_number_id_here"   # Meta Phone Number ID එක
-VERIFY_TOKEN = "my_custom_verify_token_123"     # ඔබ කැමති ඕනෑම Verification Token එකක්
+# Vercel Environment Variables වලින් Keys ලබාගැනීම
+GROQ_API_KEY = os.getenv("GROQ_API_KEY")
+WHATSAPP_TOKEN = os.getenv("WHATSAPP_TOKEN")
+PHONE_NUMBER_ID = os.getenv("PHONE_NUMBER_ID")
+VERIFY_TOKEN = os.getenv("VERIFY_TOKEN")
 
 # Groq LLM Setup (ලෝකයේ වේගවත්ම Llama මොඩලය භාවිත කරයි)
 llm = ChatGroq(
